@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import ReCAPTCHA from "react-google-recaptcha";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
@@ -10,31 +11,13 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import {
-  MapPin,
-  Mail,
-  Phone,
-  Facebook,
-  Twitter,
-  Instagram,
-} from "lucide-react";
 
 interface ContactSectionProps {
-  venueAddress?: string;
-  venueCity?: string;
-  venueState?: string;
-  venueZip?: string;
   email?: string;
-  phone?: string;
-  socialLinks?: {
-    facebook?: string;
-    twitter?: string;
-    instagram?: string;
-  };
+  formRecipient?: string;
 }
 
 const formSchema = z.object({
@@ -43,22 +26,16 @@ const formSchema = z.object({
   message: z
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
+  recaptcha: z
+    .string()
+    .min(1, { message: "Please complete the captcha verification." }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 const ContactSection = ({
-  venueAddress = "123 Worship Avenue",
-  venueCity = "Nashville",
-  venueState = "TN",
-  venueZip = "37203",
   email = "info@inhabitconference.com",
-  phone = "(615) 555-1234",
-  socialLinks = {
-    facebook: "https://facebook.com/inhabitconference",
-    twitter: "https://twitter.com/inhabitconf",
-    instagram: "https://instagram.com/inhabitconference",
-  },
+  formRecipient = "info@inhabitconference.com",
 }: ContactSectionProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -66,34 +43,96 @@ const ContactSection = ({
       name: "",
       email: "",
       message: "",
+      recaptcha: "",
     },
   });
 
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [submitTime, setSubmitTime] = useState<number | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [captchaError, setCaptchaError] = useState("");
+
+  // Set the initial time when component mounts
+  useEffect(() => {
+    setSubmitTime(Date.now());
+  }, []);
+
   const onSubmit = (data: FormValues) => {
-    // This would typically send the form data to a server
-    console.log("Form submitted:", data);
-    // Reset form after submission
-    form.reset();
-    // Show success message (would use toast in a real implementation)
-    alert("Thank you for your message! We'll get back to you soon.");
+    // Spam prevention checks
+    const currentTime = Date.now();
+    const timeElapsed = submitTime ? currentTime - submitTime : 0;
+
+    // Check if honeypot field is filled (bots often fill hidden fields)
+    if (honeypot) {
+      console.log("Potential spam detected: honeypot field filled");
+      form.reset();
+      return;
+    }
+
+    // Check if form was submitted too quickly (less than 3 seconds)
+    if (timeElapsed < 3000) {
+      console.log("Potential spam detected: form submitted too quickly");
+      form.reset();
+      return;
+    }
+
+    // Verify reCAPTCHA
+    if (!data.recaptcha) {
+      setCaptchaError("Please complete the captcha verification.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setCaptchaError("");
+
+    // In a real implementation, you would send this to a server
+    // For example using fetch or axios to a form handling service
+    console.log("Form submitted to", email || "default@example.com", ":", data);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setShowSuccess(true);
+      form.reset();
+      // Reset the reCAPTCHA
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+    }, 1500);
   };
 
   return (
-    <section className="w-full py-16 px-4 md:px-8 bg-slate-50" id="contact">
-      <div className="max-w-7xl mx-auto">
+    <section
+      className="w-full py-16 px-4 md:px-8 bg-cover bg-center"
+      id="contact"
+      style={{
+        backgroundImage:
+          "url('https://inhabit-dev.neliatiga.com/images/brisbane-unsplash.jpg')",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundBlendMode: "overlay",
+      }}
+    >
+      <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Get in Touch
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Have questions about the inHabit Conference? We're here to help you
-            on your journey.
+          <p className="text-lg text-slate-200 max-w-2xl mx-auto">
+            Have questions about the inHabit Conference? We're here to help you.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="mx-auto">
           {/* Contact Form */}
-          <Card className="shadow-lg bg-white">
+          <Card className="shadow-lg bg-white/95 backdrop-blur-sm">
             <CardHeader>
               <CardTitle>Send us a Message</CardTitle>
               <CardDescription>
@@ -150,105 +189,55 @@ const ContactSection = ({
                   )}
                 </div>
 
+                {/* Hidden honeypot field to catch bots */}
+                <div className="hidden" aria-hidden="true">
+                  <Input
+                    type="text"
+                    id="honeypot"
+                    name="honeypot"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
+                <div className="mb-6">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    // This is Google's test key - replace with your actual key in production
+                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                    onChange={(value) => {
+                      form.setValue("recaptcha", value || "");
+                      setCaptchaError("");
+                    }}
+                  />
+                  {captchaError && (
+                    <p className="text-sm text-red-500 mt-2">{captchaError}</p>
+                  )}
+                  {form.formState.errors.recaptcha && (
+                    <p className="text-sm text-red-500 mt-2">
+                      {form.formState.errors.recaptcha.message}
+                    </p>
+                  )}
+                </div>
+
                 <Button
                   type="submit"
                   className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white"
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
+
+                {showSuccess && (
+                  <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md">
+                    Thank you for your message! We'll get back to you soon.
+                  </div>
+                )}
               </form>
             </CardContent>
           </Card>
-
-          {/* Contact Information */}
-          <div className="flex flex-col justify-between">
-            <Card className="shadow-lg bg-white mb-6">
-              <CardHeader>
-                <CardTitle>Venue Information</CardTitle>
-                <CardDescription>
-                  Join us at our beautiful conference venue
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-start">
-                  <MapPin className="h-5 w-5 text-brand-primary mr-3 mt-0.5" />
-                  <div>
-                    <p className="font-medium">{venueAddress}</p>
-                    <p className="text-slate-600">
-                      {venueCity}, {venueState} {venueZip}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <Mail className="h-5 w-5 text-brand-primary mr-3" />
-                  <a
-                    href={`mailto:${email}`}
-                    className="text-brand-primary hover:underline"
-                  >
-                    {email}
-                  </a>
-                </div>
-                <div className="flex items-center">
-                  <Phone className="h-5 w-5 text-brand-primary mr-3" />
-                  <a
-                    href={`tel:${phone}`}
-                    className="text-brand-primary hover:underline"
-                  >
-                    {phone}
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="shadow-lg bg-white">
-              <CardHeader>
-                <CardTitle>Connect With Us</CardTitle>
-                <CardDescription>
-                  Follow us on social media for updates
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex space-x-4">
-                  {socialLinks.facebook && (
-                    <a
-                      href={socialLinks.facebook}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-slate-100 rounded-full hover:bg-brand-primary/10 transition-colors"
-                    >
-                      <Facebook className="h-6 w-6 text-brand-primary" />
-                    </a>
-                  )}
-                  {socialLinks.twitter && (
-                    <a
-                      href={socialLinks.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-slate-100 rounded-full hover:bg-brand-primary/10 transition-colors"
-                    >
-                      <Twitter className="h-6 w-6 text-brand-primary" />
-                    </a>
-                  )}
-                  {socialLinks.instagram && (
-                    <a
-                      href={socialLinks.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-slate-100 rounded-full hover:bg-brand-primary/10 transition-colors"
-                    >
-                      <Instagram className="h-6 w-6 text-brand-primary" />
-                    </a>
-                  )}
-                </div>
-              </CardContent>
-              <CardFooter className="border-t pt-6">
-                <p className="text-sm text-slate-600">
-                  Join our community and stay updated on the latest inHabit
-                  Conference news and announcements.
-                </p>
-              </CardFooter>
-            </Card>
-          </div>
         </div>
       </div>
     </section>

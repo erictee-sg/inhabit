@@ -1,7 +1,11 @@
 import React from "react";
-import { CircleUser, Lightbulb, Globe } from "lucide-react";
+import { CircleUser, Lightbulb, Globe, ExternalLink } from "lucide-react";
+import { Button } from "./ui/button";
 
 const MoreInfoSection = () => {
+  const bookingUrl =
+    "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets";
+
   return (
     <section className="py-16 px-4 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -53,6 +57,21 @@ const MoreInfoSection = () => {
               transforms nations.
             </p>
           </div>
+        </div>
+
+        {/* Book Tickets CTA */}
+        <div className="mt-16 text-center">
+          <Button
+            onClick={() => window.open(bookingUrl, "_blank")}
+            className="bg-brand-primary hover:bg-brand-primary/90 text-white px-10 py-7 text-xl rounded-full transition-all duration-300 transform hover:scale-105 font-bold"
+            size="lg"
+          >
+            Book Tickets
+          </Button>
+          <p className="mt-3 text-slate-600">
+            <ExternalLink className="inline mr-1 h-4 w-4 text-slate-600" />
+            trybooking.com
+          </p>
         </div>
       </div>
     </section>

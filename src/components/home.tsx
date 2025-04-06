@@ -1,16 +1,15 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import HeroSection from "./HeroSection";
 import VideoModule from "./VideoModule";
 import ScheduleSection from "./ScheduleSection";
 import MoreInfoSection from "./MoreInfoSection";
-import RegistrationSection from "./RegistrationSection";
+import ContactSection from "./ContactSection";
 import Footer from "./Footer";
 
 const Home = () => {
-  const registrationSectionRef = useRef<HTMLDivElement>(null);
-
   const scrollToRegistration = () => {
-    registrationSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Removed scrolling behavior
+    return false;
   };
 
   return (
@@ -21,10 +20,8 @@ const Home = () => {
       <VideoModule />
       {/* More Info Section */}
       <MoreInfoSection />
-      {/* Registration Section */}
-      <div ref={registrationSectionRef}>
-        <RegistrationSection />
-      </div>
+      {/* Contact Section */}
+      <ContactSection email="ericzigbiz@gmail.com" />
       {/* Footer */}
       <Footer />
     </div>

@@ -13,6 +13,7 @@ interface HeroSectionProps {
   ctaText?: string;
   videoUrl?: string;
   logoUrl?: string;
+  ctaUrl?: string;
   onRegisterClick?: () => void;
 }
 
@@ -20,10 +21,17 @@ const HeroSection = ({
   title = "inHabit",
   tagline = "21-23 August, 2025\nBrisbane, Australia",
   conferenceTagline = "It's more than a conference, it's a commissioning",
-  ctaText = "Register Now",
+  ctaText = "Book Tickets",
+  ctaUrl = "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets",
   videoUrl = "/background-video.mp4", // This would be replaced with an actual video URL
   logoUrl = "https://inhabit-dev.neliatiga.com/images/inHabit-Primary-White-Logo.svg",
-  onRegisterClick = () => console.log("Register button clicked"),
+  onRegisterClick = () => {
+    window.open(
+      "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets",
+      "_blank",
+    );
+    return false;
+  },
 }: HeroSectionProps) => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -31,9 +39,10 @@ const HeroSection = ({
 
   // Background images for carousel
   const backgroundImages = [
-    "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1920&q=75",
-    "https://inhabit-dev.neliatiga.com/images/worship01-unsplash.jpg",
-    "https://inhabit-dev.neliatiga.com/images/worship02-unsplash.jpg",
+    "https://inhabit-dev.neliatiga.com/images/inhabit-frankie-cordoba--unsplash.jpg",
+    "https://inhabit-dev.neliatiga.com/images/inhabit-orimi-protograph--unsplash.jpg",
+    "https://inhabit-dev.neliatiga.com/images/inhabit-pexels--7520745.jpg",
+    "https://inhabit-dev.neliatiga.com/images/inhabit-sam-moghadam--unsplash.jpg",
   ];
 
   // Check if on mobile device for responsive design
@@ -130,13 +139,39 @@ const HeroSection = ({
             </h1>
 
             {/* CTA Button */}
-            <Button
-              onClick={onRegisterClick}
-              size="lg"
-              className="bg-brand-primary hover:bg-brand-primary/90 text-white px-10 py-7 text-xl rounded-full transition-all duration-300 transform hover:scale-105 font-bold"
-            >
-              {ctaText}
-            </Button>
+            <div className="flex flex-col md:items-start items-center">
+              <Button
+                onClick={() =>
+                  window.open(
+                    "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets",
+                    "_blank",
+                  )
+                }
+                size="lg"
+                className="bg-brand-primary hover:bg-brand-primary/90 text-white px-10 py-7 text-xl rounded-full transition-all duration-300 transform hover:scale-105 font-bold"
+              >
+                {ctaText}
+              </Button>
+              <div className="flex items-center mt-2 text-white/70 text-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-1"
+                >
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                <span>trybooking.com</span>
+              </div>
+            </div>
           </div>
         </div>
 
