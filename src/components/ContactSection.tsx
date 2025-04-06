@@ -213,7 +213,7 @@ const ContactSection = ({
                     // This is Google's test key - replace with your actual key in production
                     sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                     onChange={(value) => {
-                      form.setValue("recaptcha", value || "");
+                      form.setValue("recaptcha", value ? value : "");
                       setCaptchaError("");
                     }}
                   />
