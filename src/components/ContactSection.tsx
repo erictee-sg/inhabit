@@ -90,7 +90,12 @@ const ContactSection = ({
 
     // In a real implementation, you would send this to a server
     // For example using fetch or axios to a form handling service
-    console.log("Form submitted to", email || "default@example.com", ":", data);
+    console.log(
+      "Form submitted to",
+      formRecipient || "default@example.com",
+      ":",
+      data,
+    );
 
     // Simulate API call
     setTimeout(() => {
