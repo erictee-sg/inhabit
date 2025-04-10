@@ -24,7 +24,7 @@ const ConferenceDetailsSection = () => {
   return (
     <section
       id="event-details"
-      className="py-16 px-4 md:px-8 bg-gradient-to-br from-white to-[#889a9866] rotate-180 relative overflow-hidden"
+      className="py-16 px-4 md:px-8 from-white to-[#889a9866] relative overflow-hidden rotate-[180deg] to-[100%] via-slate-100 from-[38%] via-[76%] bg-gradient-to-r"
     >
       <div className="max-w-7xl mx-auto rotate-180 relative z-10">
         {/* Section Header */}
@@ -126,7 +126,6 @@ const ConferenceDetailsSection = () => {
           opacity: "0.7",
         }}
       />
-
       {/* Hotel Modal */}
       <HotelModal
         hotel={selectedHotel}

@@ -49,10 +49,7 @@ const PricingTable: React.FC = () => {
         <thead className="bg-[#889a98] text-white">
           <tr>
             <th className="p-4 text-left font-bold border border-gray-200">
-              Registration
-            </th>
-            <th className="p-4 text-left font-bold border border-gray-200">
-              Date
+              Registration Period
             </th>
             <th className="p-4 text-left font-bold border border-gray-200">
               Booking type
@@ -71,20 +68,15 @@ const PricingTable: React.FC = () => {
                   className={`${tierIndex % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
                 >
                   {bookingTypeIndex === 0 && (
-                    <>
-                      <td
-                        className="p-4 border border-gray-200 font-semibold"
-                        rowSpan={tier.bookingTypes.length}
-                      >
-                        {tier.registration}
-                      </td>
-                      <td
-                        className="p-4 border border-gray-200"
-                        rowSpan={tier.bookingTypes.length}
-                      >
+                    <td
+                      className="p-4 border border-gray-200 font-semibold"
+                      rowSpan={tier.bookingTypes.length}
+                    >
+                      {tier.registration}
+                      <div className="font-normal text-sm mt-1">
                         {tier.date}
-                      </td>
-                    </>
+                      </div>
+                    </td>
                   )}
                   <td className="p-4 border border-gray-200 font-semibold">
                     {bookingType.type}
