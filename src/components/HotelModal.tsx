@@ -45,18 +45,24 @@ const HotelModal: React.FC<HotelModalProps> = ({ hotel, isOpen, onClose }) => {
         </DialogHeader>
 
         <div className="my-4">
-          <div className="relative rounded-lg overflow-hidden h-64">
+          <div className="relative rounded-lg overflow-hidden h-56">
             {hotel.images.map((image, index) => (
-              <img
+              <div
                 key={index}
-                src={image}
-                alt={`${hotel.name} - Image ${index + 1}`}
-                className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ${currentImageIndex === index ? "opacity-100" : "opacity-0"}`}
-              />
+                className={`w-full h-full absolute top-0 left-0 transition-opacity duration-500 ${currentImageIndex === index ? "opacity-100" : "opacity-0"}`}
+              >
+                <div className="w-full h-[120%] relative -top-[10%]">
+                  <img
+                    src={image}
+                    alt={`${hotel.name} - Image ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
             ))}
 
             {/* Navigation arrows */}
-            <div className="absolute inset-0 flex justify-between items-center px-2">
+            <div className="absolute inset-0 flex justify-between items-center px-2 z-10">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -80,7 +86,7 @@ const HotelModal: React.FC<HotelModalProps> = ({ hotel, isOpen, onClose }) => {
             </div>
 
             {/* Image counter */}
-            <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+            <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full z-10">
               {currentImageIndex + 1} / {hotel.images.length}
             </div>
           </div>
