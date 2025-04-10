@@ -117,7 +117,7 @@ const ContactSection = ({
   return (
     <section
       className="w-full py-16 px-4 md:px-8 bg-cover bg-center"
-      id="contact"
+      id="contact-us"
       style={{
         backgroundImage:
           "url('https://inhabit-dev.neliatiga.com/images/brisbane-unsplash.jpg')",

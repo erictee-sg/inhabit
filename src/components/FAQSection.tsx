@@ -7,6 +7,25 @@ const FAQSection = () => {
       question: "What is inHabit?",
       answer:
         "inHabit is developed by Pastor Neli Atiga (Every Nation Brisbane, Australia). It is a three day international gathering, offering you the opportunity for deep encounters with God, biblical teaching, and hands-on training, exploring how to host God's presence, release the sound of heaven, and co-labour effectively with ministry leaders to see the Kingdom advance through worship.",
+      answerHTML: (
+        <>
+          inHabit is developed by Pastor Neli Atiga (Every Nation Brisbane,
+          Australia). It is a three day international gathering, offering you
+          the opportunity for deep encounters with God, biblical teaching, and
+          hands-on training, exploring how to host God's presence, release the
+          sound of heaven, and co-labour effectively with ministry leaders to
+          see the{" "}
+          <a
+            href="https://youtu.be/f4eiXwkxVgM"
+            className="text-blue-600 underline hover:text-blue-800"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Kingdom advance through worship
+          </a>
+          .
+        </>
+      ),
     },
     {
       question: "Who should attend inHabit?",
@@ -35,8 +54,19 @@ const FAQSection = () => {
     },
     {
       question: "Is there accommodation available near the venue?",
-      answer:
-        "While we don't provide accommodation, there are several hotels and serviced apartments within a 10-15 minute drive from the venue. We recommend booking early as August is a popular time for visitors to Brisbane.",
+      answer: "Yes! Please see the list of options for accommodations.",
+      answerHTML: (
+        <>
+          Yes! Please see the{" "}
+          <a
+            href="#event-details"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            list of options for accommodations
+          </a>
+          .
+        </>
+      ),
     },
     {
       question: "Will there be food available?",
@@ -56,7 +86,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-white">
+    <section id="faqs" className="py-16 px-4 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <FAQ items={faqItems} />
       </div>

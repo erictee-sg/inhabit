@@ -1,0 +1,105 @@
+import React from "react";
+import { Button } from "./ui/button";
+
+interface PricingTier {
+  registration: string;
+  date: string;
+  bookingTypes: {
+    type: string;
+    price: string;
+  }[];
+  buttonUrl: string;
+}
+
+const pricingTiers: PricingTier[] = [
+  {
+    registration: "Early bird",
+    date: "7 April - 31 May",
+    bookingTypes: [
+      {
+        type: "Individual booking",
+        price: "$90.00",
+      },
+    ],
+    buttonUrl:
+      "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
+  },
+  {
+    registration: "Regular sign up",
+    date: "1 June - 31 July",
+    bookingTypes: [
+      {
+        type: "Individual booking",
+        price: "$130.00",
+      },
+      {
+        type: "Group booking (minimum 5)",
+        price: "$100.00",
+      },
+    ],
+    buttonUrl:
+      "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
+  },
+];
+
+const PricingTable: React.FC = () => {
+  return (
+    <div className="w-full bg-white rounded-lg shadow-sm overflow-hidden">
+      <table className="w-full border-collapse">
+        <thead className="bg-[#889a98] text-white">
+          <tr>
+            <th className="p-4 text-left font-bold border border-gray-200">
+              Registration
+            </th>
+            <th className="p-4 text-left font-bold border border-gray-200">
+              Date
+            </th>
+            <th className="p-4 text-left font-bold border border-gray-200">
+              Booking type
+            </th>
+            <th className="p-4 text-right font-bold border border-gray-200">
+              Price
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {pricingTiers.map((tier, tierIndex) => (
+            <React.Fragment key={tierIndex}>
+              {tier.bookingTypes.map((bookingType, bookingTypeIndex) => (
+                <tr
+                  key={`${tierIndex}-${bookingTypeIndex}`}
+                  className={`${tierIndex % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
+                >
+                  {bookingTypeIndex === 0 && (
+                    <>
+                      <td
+                        className="p-4 border border-gray-200 font-semibold"
+                        rowSpan={tier.bookingTypes.length}
+                      >
+                        {tier.registration}
+                      </td>
+                      <td
+                        className="p-4 border border-gray-200"
+                        rowSpan={tier.bookingTypes.length}
+                      >
+                        {tier.date}
+                      </td>
+                    </>
+                  )}
+                  <td className="p-4 border border-gray-200 font-semibold">
+                    {bookingType.type}
+                  </td>
+                  <td className="p-4 text-right border border-gray-200 font-semibold">
+                    {bookingType.price}
+                  </td>
+                </tr>
+              ))}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default PricingTable;

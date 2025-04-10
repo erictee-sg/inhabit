@@ -148,7 +148,7 @@ const HeroSection = ({
       </div>
 
       {/* Navigation Bar */}
-      <div className="absolute top-0 right-0 z-30 p-4 md:p-8 w-full">
+      <div className="absolute top-0 right-0 z-30 p-4 md:p-8 max-w-7xl mx-auto left-0 right-0">
         <div className="flex justify-end items-center gap-4">
           {/* Mobile Book Now button */}
           <Button

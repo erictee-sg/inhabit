@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 type FAQItem = {
   question: string;
   answer: string;
+  answerHTML?: React.ReactNode;
 };
 
 interface FAQProps {
@@ -41,7 +42,9 @@ const FAQ = ({ items = [] }: FAQProps) => {
             </button>
             {openIndex === index && (
               <div className="p-4 bg-gray-50 border-t border-gray-200">
-                <p className="text-slate-600">{item.answer}</p>
+                <p className="text-slate-600">
+                  {item.answerHTML ? item.answerHTML : item.answer}
+                </p>
               </div>
             )}
           </div>

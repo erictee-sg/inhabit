@@ -1,15 +1,17 @@
 import React from "react";
-import { CircleUser, Lightbulb, Globe } from "lucide-react";
+import { BookOpen, Cross, Lightbulb, Globe } from "lucide-react";
 
 const MoreInfoSection = () => {
   return (
-    <section className="py-16 px-4 md:px-8 bg-[#889a98]">
+    <section id="about" className="py-16 px-4 md:px-8 bg-[#889a98]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1 */}
           <div className="flex flex-col items-center text-center p-6 rounded-lg">
             <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-6">
-              <CircleUser className="w-10 h-10 text-[#889a98]" />
+              <div className="flex items-center justify-center">
+                <BookOpen className="w-10 h-10 text-[#889a98] mr-1" />
+              </div>
             </div>
             <h3 className="text-xl font-bold text-white mb-4">
               Prophetic Encounter
