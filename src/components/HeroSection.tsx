@@ -257,7 +257,7 @@ const HeroSection = ({
         <div className="flex flex-col md:flex-row h-full items-center">
           {/* First column (1/3) - Logo and date/location */}
           <div
-            className={`w-full md:w-1/3 flex flex-col items-center md:items-start md:pr-8 self-start ${isMobile ? "pt-20" : "pt-8"} md:pt-12`}
+            className={`w-full md:w-1/3 flex flex-col items-center md:items-start md:pr-8 self-start ${isMobile ? "pt-40" : "pt-8"} md:pt-12`}
           >
             {/* Logo */}
             <img
