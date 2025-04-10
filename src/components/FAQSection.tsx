@@ -50,7 +50,12 @@ const FAQSection = () => {
     {
       question: "Where is inHabit being held?",
       answer:
-        "inHabit will be held at Every Nation Brisbane, 100 Flockton Street, Everton Park, QLD 4053, Australia. The venue offers modern facilities with ample parking and is easily accessible by public transport.",
+        "inHabit will take place at Coorparoo, Queensland 4151 Brisbane, Australia. Full directions and other info will be sent as soon as it’s available.",
+    },
+    {
+      question: "What are the best travel options to the venue?",
+      answer:
+        "You can fly into Brisbane Airport, and the venue is approximately 30 minutes from there. ",
     },
     {
       question: "Is there accommodation available near the venue?",
@@ -71,17 +76,22 @@ const FAQSection = () => {
     {
       question: "Will there be food available?",
       answer:
-        "Light refreshments will be provided during tea breaks. For meals, there are several cafes and restaurants within walking distance of the venue, and a list of recommended eateries will be provided in your welcome pack.",
+        "Main meals are not included in the registration fee, but tea breaks will be provided. Complimentary coffee and tea will be available throughout the day. There will also be cafes and restaurants  nearby for lunch and dinner options. A list of recommended eateries will be shared closer to the date.",
     },
     {
-      question: "Can I get a refund if I can't attend?",
+      question: "What should I bring?",
       answer:
-        "Refunds are available up to 30 days before the event with a 15% administration fee. Within 30 days of the event, we can transfer your registration to another person but cannot offer refunds. Please contact our team at support@inhabitconference.com for assistance.",
+        "Bring your Bible, journal, and an open heart. If you're a creative (photographer, artist, dancer), feel free to bring your tools of expression. Comfortable clothing and a refillable water bottle are also recommended.",
     },
     {
-      question: "Will sessions be recorded?",
+      question: "Will childcare be available?",
       answer:
-        "Yes, all main sessions will be recorded and made available to registered attendees after the conference for a limited time. Breakout sessions will not be recorded to encourage open sharing and participation.",
+        "At this time, we are not able to provide childcare. We recommend this event for ages 16 and above unless otherwise specified.",
+    },
+    {
+      question: "Will the sessions be recorded or livestreamed?",
+      answer:
+        "Some sessions may be recorded, but inHabit is primarily designed to be an in-person experience. We encourage you to be there physically if possible—you won't want to miss the atmosphere in the room!",
     },
   ];
 
