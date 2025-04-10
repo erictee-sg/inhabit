@@ -4,6 +4,7 @@ import VideoModule from "./VideoModule";
 import ScheduleSection from "./ScheduleSection";
 import MoreInfoSection from "./MoreInfoSection";
 import ConferenceDetailsSection from "./ConferenceDetailsSection";
+import FAQSection from "./FAQSection";
 import ContactSection from "./ContactSection";
 import Footer from "./Footer";
 
@@ -23,6 +24,8 @@ const Home = () => {
       <MoreInfoSection />
       {/* Conference Details Section */}
       <ConferenceDetailsSection />
+      {/* FAQ Section */}
+      <FAQSection />
       {/* Contact Section */}
       <ContactSection email="ericzigbiz@gmail.com" />
       {/* Footer */}

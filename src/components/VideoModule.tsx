@@ -29,9 +29,7 @@ const VideoModule = ({
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-white tracking-tight leading-tight mb-4">
-            <div className="text-4xl font-bold">
-              Experience inHabit Conference
-            </div>
+            <div className="text-4xl font-bold">Experience inHabit</div>
             <div className="text-4xl font-normal mt-2">
               Watch this video from Ps Neli Atiga:
             </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause, ExternalLink, Menu } from "lucide-react";
 
 // Add animation for the logo
 import "../index.css";
@@ -22,12 +22,12 @@ const HeroSection = ({
   tagline = "21-23 August, 2025\nBrisbane, Australia",
   conferenceTagline = "It's more than a conference, it's a commissioning",
   ctaText = "Book Tickets",
-  ctaUrl = "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets",
+  ctaUrl = "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
   videoUrl = "/background-video.mp4", // This would be replaced with an actual video URL
   logoUrl = "https://inhabit-dev.neliatiga.com/images/inHabit-Primary-White-Logo.svg",
   onRegisterClick = () => {
     window.open(
-      "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets",
+      "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
       "_blank",
     );
     return false;
@@ -36,6 +36,40 @@ const HeroSection = ({
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Add useEffect for smooth scrolling
+  useEffect(() => {
+    // Implement smooth scrolling for anchor links
+    const handleAnchorClick = function (this: HTMLAnchorElement, e: Event) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href");
+      if (!targetId || !targetId.startsWith("#")) return;
+
+      const targetElement = document.getElementById(targetId.substring(1));
+
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+        });
+        // Close mobile menu if open
+        setMobileMenuOpen(false);
+      }
+    };
+
+    // Add event listeners to all anchor links
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    anchors.forEach((anchor) => {
+      anchor.addEventListener("click", handleAnchorClick);
+    });
+
+    // Clean up event listeners on unmount
+    return () => {
+      anchors.forEach((anchor) => {
+        anchor.removeEventListener("click", handleAnchorClick);
+      });
+    };
+  }, [setMobileMenuOpen]);
 
   // Background images for carousel
   const backgroundImages = [
@@ -112,6 +146,111 @@ const HeroSection = ({
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-brand-black/70 via-brand-black/50 to-brand-black/90 z-10"></div>
       </div>
+
+      {/* Navigation Bar */}
+      <div className="absolute top-0 right-0 z-30 p-4 md:p-8 w-full">
+        <div className="flex justify-end items-center gap-4">
+          {/* Mobile Book Now button */}
+          <Button
+            onClick={() =>
+              window.open(
+                "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
+                "_blank",
+              )
+            }
+            size="sm"
+            className="md:hidden bg-brand-primary hover:bg-brand-primary/90 text-white px-3 py-1 rounded-full transition-all duration-300 transform hover:scale-105 font-bold text-sm"
+          >
+            Book Now
+            <ExternalLink className="ml-1 h-3 w-3" />
+          </Button>
+
+          {/* Mobile hamburger menu button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-white hover:bg-white/10"
+            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+
+          {/* Desktop navigation */}
+          <nav className="hidden md:flex items-center gap-6 text-white/90 font-medium">
+            <a
+              href="#about"
+              className="hover:text-white transition-colors duration-200"
+            >
+              About
+            </a>
+            <a
+              href="#event-details"
+              className="hover:text-white transition-colors duration-200"
+            >
+              Event Details
+            </a>
+            <a
+              href="#faqs"
+              className="hover:text-white transition-colors duration-200"
+            >
+              FAQs
+            </a>
+            <a
+              href="#contact-us"
+              className="hover:text-white transition-colors duration-200"
+            >
+              Contact Us
+            </a>
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
+                  "_blank",
+                )
+              }
+              size="default"
+              className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-bold text-base"
+            >
+              Book Now
+              <ExternalLink className="ml-2 h-5 w-5" />
+            </Button>
+          </nav>
+        </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-16 right-4 bg-brand-black/95 backdrop-blur-md rounded-lg shadow-lg p-4 w-48 z-50 border border-white/10">
+            <nav className="flex flex-col gap-4 text-white/90 font-medium">
+              <a
+                href="#about"
+                className="hover:text-white transition-colors duration-200 py-2"
+              >
+                About
+              </a>
+              <a
+                href="#event-details"
+                className="hover:text-white transition-colors duration-200 py-2"
+              >
+                Event Details
+              </a>
+              <a
+                href="#faqs"
+                className="hover:text-white transition-colors duration-200 py-2"
+              >
+                FAQs
+              </a>
+              <a
+                href="#contact-us"
+                className="hover:text-white transition-colors duration-200 py-2"
+              >
+                Contact Us
+              </a>
+            </nav>
+          </div>
+        )}
+      </div>
+
       {/* Content Container */}
       <div className="relative z-20 h-full px-4 md:px-8 max-w-7xl mx-auto">
         {/* Two-column layout for desktop */}
@@ -138,40 +277,7 @@ const HeroSection = ({
               {conferenceTagline}
             </h1>
 
-            {/* CTA Button */}
-            <div className="flex flex-col md:items-start items-center">
-              <Button
-                onClick={() =>
-                  window.open(
-                    "https://www.trybooking.com/events/1383334/sessions/5534205/sections/2638189/tickets",
-                    "_blank",
-                  )
-                }
-                size="lg"
-                className="bg-brand-primary hover:bg-brand-primary/90 text-white px-10 py-7 text-xl rounded-full transition-all duration-300 transform hover:scale-105 font-bold"
-              >
-                {ctaText}
-              </Button>
-              <div className="flex items-center mt-2 text-white/70 text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mr-1"
-                >
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
-                <span>trybooking.com</span>
-              </div>
-            </div>
+            {/* No CTA Button here anymore */}
           </div>
         </div>
 
