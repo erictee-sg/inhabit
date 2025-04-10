@@ -34,7 +34,7 @@ const ConferenceDetailsSection = () => {
                 <tbody>
                   <tr className="bg-white hover:bg-gray-50">
                     <td className="p-4 border">Early bird</td>
-                    <td className="p-4 border">April 7 - May 31</td>
+                    <td className="p-4 border">12 April - 31 May</td>
                     <td className="p-4 border">Individual booking</td>
                     <td className="p-4 text-right border font-semibold">
                       $90.00
@@ -45,7 +45,7 @@ const ConferenceDetailsSection = () => {
                       Regular sign up
                     </td>
                     <td className="p-4 border" rowSpan={2}>
-                      June 1-July 31
+                      1 June - 31 July
                     </td>
                     <td className="p-4 border">Individual booking</td>
                     <td className="p-4 text-right border font-semibold">
