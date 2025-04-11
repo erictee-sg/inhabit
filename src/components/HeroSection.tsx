@@ -77,6 +77,8 @@ const HeroSection = ({
     "https://inhabit-dev.neliatiga.com/images/inhabit-orimi-protograph--unsplash.jpg",
     "https://inhabit-dev.neliatiga.com/images/inhabit-pexels--7520745.jpg",
     "https://inhabit-dev.neliatiga.com/images/inhabit-sam-moghadam--unsplash.jpg",
+    "https://inhabit-dev.neliatiga.com/images/worship01-unsplash.jpg",
+    "https://inhabit-dev.neliatiga.com/images/worship02-unsplash.jpg",
   ];
 
   // Check if on mobile device for responsive design
