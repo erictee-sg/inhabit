@@ -34,8 +34,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const ContactSection = ({
-  email = "info@inhabitconference.com",
-  formRecipient = "info@inhabitconference.com",
+  email = "hello@neliatiga.com",
+  formRecipient = "hello@neliatiga.com",
 }: ContactSectionProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -60,7 +60,7 @@ const ContactSection = ({
     setSubmitTime(Date.now());
   }, []);
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     // Spam prevention checks
     const currentTime = Date.now();
     const timeElapsed = submitTime ? currentTime - submitTime : 0;
@@ -88,30 +88,37 @@ const ContactSection = ({
     setIsSubmitting(true);
     setCaptchaError("");
 
-    // In a real implementation, you would send this to a server
-    // For example using fetch or axios to a form handling service
-    console.log(
-      "Form submitted to",
-      formRecipient || "default@example.com",
-      ":",
-      data,
-    );
+    try {
+      const response = await axios.post("/contact-form.php", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowSuccess(true);
-      form.reset();
-      // Reset the reCAPTCHA
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
+      if (response.status === 200) {
+        setIsSubmitting(false);
+        setShowSuccess(true);
+        form.reset();
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+        setTimeout(() => {
+          setShowSuccess(false);
+        }, 5000);
+      } else {
+        console.error(
+          "Form submission failed:",
+          response.status,
+          response.data,
+        );
+        setIsSubmitting(false);
+        alert("Form submission failed. Please try again.");
       }
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-    }, 1500);
+    } catch (error: any) {
+      console.error("Form submission error:", error);
+      setIsSubmitting(false);
+      alert("Form submission failed. Please try again.");
+    }
   };
 
   return (
@@ -211,7 +218,7 @@ const ContactSection = ({
                   <ReCAPTCHA
                     ref={recaptchaRef}
                     // This is Google's test key - replace with your actual key in production
-                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                    sitekey="6LfL1hQrAAAAAL1VOe63lCrWeKNGV-q79mrfw7hr"
                     onChange={(value) => {
                       form.setValue("recaptcha", value ? value : "");
                       setCaptchaError("");
