@@ -131,7 +131,7 @@ const ContactSection = ({
             Get in Touch
           </h2>
           <p className="text-lg text-slate-200 max-w-2xl mx-auto">
-            Have questions about the inHabit Conference? We're here to help you.
+            Have questions about the inHabit? We're here to help you.
           </p>
         </div>
 
