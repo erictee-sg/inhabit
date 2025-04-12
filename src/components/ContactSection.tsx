@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -89,11 +90,15 @@ const ContactSection = ({
     setCaptchaError("");
 
     try {
-      const response = await axios.post("/contact-form.php", data, {
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        "https://inhabit.neliatiga.com/contact-form.php",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (response.status === 200) {
         setIsSubmitting(false);
