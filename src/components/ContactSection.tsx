@@ -217,7 +217,6 @@ const ContactSection = ({
                 <div className="mb-6">
                   <ReCAPTCHA
                     ref={recaptchaRef}
-                    // This is Google's test key - replace with your actual key in production
                     sitekey="6LfL1hQrAAAAAL1VOe63lCrWeKNGV-q79mrfw7hr"
                     onChange={(value) => {
                       form.setValue("recaptcha", value ? value : "");
