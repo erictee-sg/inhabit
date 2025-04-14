@@ -17,8 +17,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      heading: ["Neue Einstellung", "sans-serif"],
-      "heading-bold": ["Neue Einstellung", "sans-serif"],
+      heading: ["Neue Einstellung", "Montserrat", "sans-serif"],
+      "heading-bold": ["Neue Einstellung", "Montserrat", "sans-serif"],
       sans: ["Montserrat", "sans-serif"],
     },
     extend: {
