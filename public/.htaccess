@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Set environment variables for Supabase
+SetEnv VITE_SUPABASE_URL your_supabase_url_here
+SetEnv VITE_SUPABASE_ANON_KEY your_supabase_anon_key_here
+
+AddType font/woff2 .woff2 

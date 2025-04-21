@@ -292,7 +292,7 @@ const ContactSection = ({
             <div className="mb-6">
               <ReCAPTCHA
                 ref={recaptchaRef}
-                sitekey="6Ldcvx8rAAAAAIK99WT_BgLU8LGXOdrrYQcNr1Ar"
+                sitekey="6LcnQpApAAAAAGkXbPJO3mLKywMbOCCTSNV9jPVK"
                 onChange={(value) => {
                   try {
                     // Safely handle the value - ensure it's a string or empty string
@@ -343,5 +343,18 @@ const ContactSection = ({
     </section>
   );
 };
+
+// Add reCAPTCHA v3 type definition to window object
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (
+        siteKey: string,
+        options: { action: string },
+      ) => Promise<string>;
+    };
+  }
+}
 
 export default ContactSection;
