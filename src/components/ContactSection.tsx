@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -8,6 +7,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "../components/ui/label";
+import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import {
   Card,
   CardContent,
@@ -38,6 +38,20 @@ const ContactSection = ({
   email = "hello@neliatiga.com",
   formRecipient = "hello@neliatiga.com",
 }: ContactSectionProps) => {
+  // Track if Supabase is properly configured
+  const [supabaseConfigured, setSupabaseConfigured] = useState(
+    isSupabaseConfigured(),
+  );
+
+  // Check if Supabase is properly configured on component mount
+  useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      console.error(
+        "Supabase environment variables are not properly configured",
+      );
+      setSupabaseConfigured(false);
+    }
+  }, []);
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,6 +76,13 @@ const ContactSection = ({
   }, []);
 
   const onSubmit = async (data: FormValues) => {
+    // Check if Supabase is properly configured
+    if (!supabaseConfigured) {
+      alert(
+        `Unable to submit form: The contact system is not properly configured. Please email us directly at ${formRecipient}`,
+      );
+      return;
+    }
     // Spam prevention checks
     const currentTime = Date.now();
     const timeElapsed = submitTime ? currentTime - submitTime : 0;
@@ -90,170 +111,233 @@ const ContactSection = ({
     setCaptchaError("");
 
     try {
-      const response = await axios.post(
-        "https://inhabit.neliatiga.com/contact-form.php",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
+      // Insert data into Supabase
+      const { data: insertedData, error } = await supabase
+        .from("contact_messages")
+        .insert([
+          {
+            name: data.name,
+            email: data.email,
+            message: data.message,
+            recaptcha_token: data.recaptcha,
           },
-        },
-      );
+        ]);
 
-      if (response.status === 200) {
+      if (error) {
+        console.error("Supabase insertion error:", error);
         setIsSubmitting(false);
-        setShowSuccess(true);
-        form.reset();
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
+
+        // More specific error messages based on error code
+        if (error.code === "23505") {
+          // Unique constraint violation
+          alert(
+            "This message appears to be a duplicate. Please try with different content.",
+          );
+        } else if (error.code === "23503") {
+          // Foreign key violation
+          alert(
+            "There was a reference error in your submission. Please try again.",
+          );
+        } else if (error.code === "42P01") {
+          // Undefined table
+          alert(
+            "The contact system is currently unavailable. Please try again later or contact us directly.",
+          );
+        } else if (error.code === "42501") {
+          // Insufficient privilege
+          alert(
+            "You don't have permission to submit this form. Please contact us directly.",
+          );
+        } else if (error.code === "23502") {
+          // Not null violation
+          alert("Please ensure all required fields are filled out correctly.");
+        } else if (error.message && error.message.includes("network")) {
+          alert(
+            "Network error. Please check your internet connection and try again.",
+          );
+        } else {
+          alert(
+            "Form submission failed. Please try again later or contact us directly at " +
+              formRecipient,
+          );
         }
-        setTimeout(() => {
-          setShowSuccess(false);
-        }, 5000);
-      } else {
-        console.error(
-          "Form submission failed:",
-          response.status,
-          response.data,
-        );
-        setIsSubmitting(false);
-        alert("Form submission failed. Please try again.");
+        return;
       }
+
+      setIsSubmitting(false);
+      setShowSuccess(true);
+      form.reset();
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
     } catch (error: any) {
       console.error("Form submission error:", error);
       setIsSubmitting(false);
-      alert("Form submission failed. Please try again.");
+
+      // Handle different types of errors
+      if (error.message && typeof error.message === "string") {
+        if (
+          error.message.includes("network") ||
+          error.message.includes("fetch") ||
+          error.message.includes("connection")
+        ) {
+          alert(
+            "Network error. Please check your internet connection and try again.",
+          );
+        } else if (error.message.includes("timeout")) {
+          alert("Request timed out. Please try again later.");
+        } else if (
+          error.message.includes("auth") ||
+          error.message.includes("credentials") ||
+          error.message.includes("permission")
+        ) {
+          alert("Authentication error. Please refresh the page and try again.");
+        } else {
+          alert(
+            "Form submission failed. Please try again or contact us directly at " +
+              formRecipient,
+          );
+        }
+      } else {
+        alert(
+          "An unexpected error occurred. Please try again or contact us directly at " +
+            formRecipient,
+        );
+      }
     }
   };
 
   return (
-    <section
-      className="w-full py-16 px-4 md:px-8 bg-cover bg-center"
-      id="contact-us"
-      style={{
-        backgroundImage:
-          "url('https://inhabit-dev.neliatiga.com/images/brisbane-unsplash.jpg')",
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        backgroundBlendMode: "overlay",
-      }}
-    >
+    <section className="w-full py-8" id="contact-us">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-heading-bold mb-8 text-left">
             Get in Touch
-          </h2>
-          <p className="text-lg text-slate-200 max-w-2xl mx-auto">
-            Have questions about the inHabit? We're here to help you.
-          </p>
+          </h1>
         </div>
 
         <div className="mx-auto">
-          {/* Contact Form */}
-          <Card className="shadow-lg bg-white/95 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle>Send us a Message</CardTitle>
-              <CardDescription>
-                Fill out the form below and our team will get back to you as
-                soon as possible.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
-                <div className="space-y-2">
-                  <Label htmlFor="name">Your Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="John Doe"
-                    {...form.register("name")}
-                  />
-                  {form.formState.errors.name && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.name.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john@example.com"
-                    {...form.register("email")}
-                  />
-                  {form.formState.errors.email && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Your Message</Label>
-                  <Textarea
-                    id="message"
-                    placeholder="How can we help you?"
-                    rows={5}
-                    {...form.register("message")}
-                  />
-                  {form.formState.errors.message && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.message.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Hidden honeypot field to catch bots */}
-                <div className="hidden" aria-hidden="true">
-                  <Input
-                    type="text"
-                    id="honeypot"
-                    name="honeypot"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
-                  />
-                </div>
-
-                <div className="mb-6">
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey="6LfL1hQrAAAAAL1VOe63lCrWeKNGV-q79mrfw7hr"
-                    onChange={(value) => {
-                      form.setValue("recaptcha", value ? value : "");
-                      setCaptchaError("");
-                    }}
-                  />
-                  {captchaError && (
-                    <p className="text-sm text-red-500 mt-2">{captchaError}</p>
-                  )}
-                  {form.formState.errors.recaptcha && (
-                    <p className="text-sm text-red-500 mt-2">
-                      {form.formState.errors.recaptcha.message}
-                    </p>
-                  )}
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-
-                {showSuccess && (
-                  <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md">
-                    Thank you for your message! We'll get back to you soon.
-                  </div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-white">
+                  Your Name
+                </Label>
+                <Input
+                  id="name"
+                  placeholder="John Doe"
+                  {...form.register("name")}
+                  className="bg-white/10 border-slate-700 text-white"
+                />
+                {form.formState.errors.name && (
+                  <p className="text-sm text-red-400">
+                    {form.formState.errors.name.message}
+                  </p>
                 )}
-              </form>
-            </CardContent>
-          </Card>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-white">
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="john@example.com"
+                  {...form.register("email")}
+                  className="bg-white/10 border-slate-700 text-white"
+                />
+                {form.formState.errors.email && (
+                  <p className="text-sm text-red-400">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="message" className="text-white">
+                Your Message
+              </Label>
+              <Textarea
+                id="message"
+                placeholder="How can we help you?"
+                rows={5}
+                {...form.register("message")}
+                className="bg-white/10 border-slate-700 text-white"
+              />
+              {form.formState.errors.message && (
+                <p className="text-sm text-red-400">
+                  {form.formState.errors.message.message}
+                </p>
+              )}
+            </div>
+
+            {/* Hidden honeypot field to catch bots */}
+            <div className="hidden" aria-hidden="true">
+              <Input
+                type="text"
+                id="honeypot"
+                name="honeypot"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
+
+            <div className="mb-6">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey="6Ldcvx8rAAAAAIK99WT_BgLU8LGXOdrrYQcNr1Ar"
+                onChange={(value) => {
+                  try {
+                    // Safely handle the value - ensure it's a string or empty string
+                    const safeValue =
+                      typeof value === "string" ? value : value || "";
+                    form.setValue("recaptcha", safeValue);
+                    setCaptchaError("");
+                  } catch (error) {
+                    console.error("Error handling reCAPTCHA value:", error);
+                    form.setValue("recaptcha", "");
+                  }
+                }}
+              />
+              {captchaError && (
+                <p className="text-sm text-red-400 mt-2">{captchaError}</p>
+              )}
+              {form.formState.errors.recaptcha && (
+                <p className="text-sm text-red-400 mt-2">
+                  {form.formState.errors.recaptcha.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="px-8 bg-brand-primary hover:bg-brand-primary/90 text-white mx-auto block"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </Button>
+
+            {showSuccess && (
+              <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md">
+                Thank you for your message! We'll get back to you soon.
+              </div>
+            )}
+
+            {!supabaseConfigured && (
+              <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-md">
+                Note: Our contact form is currently experiencing technical
+                difficulties. Please email us directly at {formRecipient} if you
+                don't receive a confirmation.
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </section>

@@ -25,7 +25,7 @@ const pricingTiers: PricingTier[] = [
       "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
   },
   {
-    registration: "Regular sign up",
+    registration: "Standard",
     date: "1 June - 31 July",
     bookingTypes: [
       {
@@ -48,14 +48,14 @@ const PricingTable: React.FC = () => {
       <table className="w-full border-collapse">
         <thead className="bg-[#889a98] text-white">
           <tr>
-            <th className="p-4 text-left font-bold border border-gray-200">
+            <th className="p-4 font-normal text-left border border-gray-200">
               Registration Period
             </th>
-            <th className="p-4 text-left font-bold border border-gray-200">
+            <th className="p-4 font-normal text-left border border-gray-200">
               Booking type
             </th>
-            <th className="p-4 text-right font-bold border border-gray-200">
-              Price
+            <th className="p-4 font-normal text-right  border border-gray-200">
+              Ticket Price (AUD)
             </th>
           </tr>
         </thead>
@@ -69,7 +69,7 @@ const PricingTable: React.FC = () => {
                 >
                   {bookingTypeIndex === 0 && (
                     <td
-                      className="p-4 border border-gray-200 font-semibold"
+                      className="p-4 border border-gray-200 font-normal"
                       rowSpan={tier.bookingTypes.length}
                     >
                       {tier.registration}
@@ -78,10 +78,10 @@ const PricingTable: React.FC = () => {
                       </div>
                     </td>
                   )}
-                  <td className="p-4 border border-gray-200 font-semibold">
+                  <td className="p-4 border border-gray-200 font-normal">
                     {bookingType.type}
                   </td>
-                  <td className="p-4 text-right border border-gray-200 font-semibold">
+                  <td className="p-4 text-right border border-gray-200 font-normal">
                     {bookingType.price}
                   </td>
                 </tr>

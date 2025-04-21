@@ -5,9 +5,27 @@ const MoreInfoSection = () => {
   return (
     <section id="about" className="py-16 px-4 md:px-8 bg-[#889a98]">
       <div className="max-w-7xl mx-auto">
+        {/* Header and Description */}
+        <div className="text-left mb-12">
+          <h1 className="md:text-4xl font-bold text-white mb-6 text-5xl">
+            What is inHabit?
+          </h1>
+          <div className="text-slate-100 space-y-4 md:w-2/3 text-3xl">
+            <p>
+              Spanning across 3 days, this conference is open to both local and
+              international delegates offers meticulously curated sessions for
+              equipping, empowering and for transforming encounters with God.
+            </p>
+            <p>
+              inHabit aims to cultivate an experiential learning environment set
+              up for:
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1 */}
-          <div className="flex flex-col items-center text-center p-6 rounded-lg">
+          <div className="flex flex-col items-center text-left p-6 rounded-lg border border-white">
             <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-6">
               <div className="flex items-center justify-center">
                 <BookOpen className="w-10 h-10 text-[#889a98] mr-1" />
@@ -25,7 +43,7 @@ const MoreInfoSection = () => {
           </div>
 
           {/* Column 2 */}
-          <div className="flex flex-col items-center text-center p-6 rounded-lg">
+          <div className="flex flex-col items-center text-left p-6 rounded-lg border border-white">
             <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-6">
               <Lightbulb className="w-10 h-10 text-[#889a98]" />
             </div>
@@ -41,7 +59,7 @@ const MoreInfoSection = () => {
           </div>
 
           {/* Column 3 */}
-          <div className="flex flex-col items-center text-center p-6 rounded-lg">
+          <div className="flex flex-col items-center text-left p-6 rounded-lg border border-white">
             <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-6">
               <Globe className="w-10 h-10 text-[#889a98]" />
             </div>

@@ -11,6 +11,34 @@ export interface Hotel {
 
 export const hotels: Hotel[] = [
   {
+    id: "airbnb",
+    name: "Airbnb",
+    location:
+      "Reasonably priced apartments and Airbnbs are available in Coorparoo and the neighboring suburb of Woolloongabba. Alternatively, you may consider booking in the more popular suburbs of South Brisbane (South Bank), Kangaroo Point, or the CBD, which are also within reasonable proximity to the hub.",
+    travelToENBHub: "Varies by location",
+    travelToQMC: "Varies by location",
+    reviews: "Varies by property - check individual listings for reviews",
+    website: "https://www.airbnb.com.au/s/Brisbane--Australia",
+    images: [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&q=80",
+    ],
+  },
+  {
+    id: "courtyard-marriott",
+    name: "Courtyard by Marriott Brisbane South Bank",
+    location: "218 Vulture Street, South Brisbane, 4101 Brisbane, Australia",
+    travelToENBHub: "10-15 min drive / 25 min public transport",
+    travelToQMC: "10-15 min drive / 35 min public transport",
+    reviews: "Positive – good location, 30 min pleasant walk to the city",
+    website:
+      "https://www.marriott.com/en-us/hotels/bnecy-courtyard-brisbane-south-bank/",
+    images: [
+      "https://inhabit-dev.neliatiga.com/images/hotels-courtyardsouthbank01.jpg",
+      "https://inhabit-dev.neliatiga.com/images/hotels-courtyardsouthbank02.jpg",
+    ],
+  },
+  {
     id: "eastwood-apartments",
     name: "Eastwood Apartments",
     location: "Logan Rd, Woolloongabba",

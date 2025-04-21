@@ -1,5 +1,4 @@
 import React from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 type FAQItem = {
   question: string;
@@ -12,41 +11,23 @@ interface FAQProps {
 }
 
 const FAQ = ({ items = [] }: FAQProps) => {
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
-
-  const toggleQuestion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <div className="w-full">
-      <h2 className="text-2xl font-bold text-center text-slate-900 mb-8">
+      <h1 className="text-4xl font-heading-bold mb-8 text-left">
         Frequently Asked Questions
-      </h2>
-      <div className="space-y-4">
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((item, index) => (
           <div
             key={index}
-            className="border border-gray-200 rounded-lg overflow-hidden"
+            className="bg-white rounded-lg shadow-sm p-6 border-8 border-gray-300"
           >
-            <button
-              onClick={() => toggleQuestion(index)}
-              className={`w-full flex justify-between items-center p-4 text-left font-medium text-slate-900 ${openIndex === index ? "bg-gray-50" : "bg-white"}`}
-            >
-              <span>{item.question}</span>
-              {openIndex === index ? (
-                <ChevronUp className="h-5 w-5 text-slate-500" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-slate-500" />
-              )}
-            </button>
-            {openIndex === index && (
-              <div className="p-4 bg-gray-50 border-t border-gray-200">
-                <p className="text-slate-600">
-                  {item.answerHTML ? item.answerHTML : item.answer}
-                </p>
-              </div>
-            )}
+            <h3 className="text-xl font-semibold text-slate-900 mb-4">
+              {item.question}
+            </h3>
+            <div className="text-slate-600">
+              {item.answerHTML ? item.answerHTML : item.answer}
+            </div>
           </div>
         ))}
       </div>
