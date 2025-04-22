@@ -109,6 +109,8 @@ const ContactSection = ({
             name: sanitizedName,
             email: sanitizedEmail,
             message: sanitizedMessage,
+            // Add a timestamp to help prevent duplicate submissions
+            created_at: new Date().toISOString(),
           },
         ]);
 
