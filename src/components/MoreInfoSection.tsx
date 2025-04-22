@@ -13,7 +13,7 @@ const MoreInfoSection = () => {
           <div className="text-slate-100 space-y-4 md:w-2/3 text-3xl">
             <p>
               Spanning across 3 days, this conference is open to both local and
-              international delegates offers meticulously curated sessions for
+              international delegates offer meticulously curated sessions for
               equipping, empowering and for transforming encounters with God.
             </p>
             <p>
@@ -35,10 +35,10 @@ const MoreInfoSection = () => {
               Prophetic Encounter
             </h3>
             <p className="text-slate-100">
-              This conference commissions worship leaders, musicians, and
-              creatives to build prophetic cultures that transform communities.
-              Through biblical teaching, you'll learn to host God's presence and
-              advance the Kingdom through authentic worship.
+              Experience the prophetic in worship and learn how to generate a
+              transforming environment and culture for the prophetic to flow.
+              Receive biblically based teachings on hosting God's presence and
+              advancing the Kingdom through authentic worship.
             </p>
           </div>
 
