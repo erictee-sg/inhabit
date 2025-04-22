@@ -1,3 +1,4 @@
+AddType font/woff2 .woff2 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -6,9 +7,6 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
-
 # Set environment variables for Supabase
-SetEnv VITE_SUPABASE_URL your_supabase_url_here
-SetEnv VITE_SUPABASE_ANON_KEY your_supabase_anon_key_here
-
-AddType font/woff2 .woff2 
+SetEnv VITE_SUPABASE_URL https://mtxaayrecncczrptsus.supabase.co
+SetEnv VITE_SUPABASE_ANON_KEY eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eGFheW5yZWNuY2N6cnB0c3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY5NzI3NzcsImV4cCI6MjAzMjU0ODc3N30.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eGFheW5yZWNuY2N6cnB0c3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY5NzI3NzcsImV4cCI6MjAzMjU0ODc3N30
