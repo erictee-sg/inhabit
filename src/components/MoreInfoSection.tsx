@@ -13,7 +13,7 @@ const MoreInfoSection = () => {
           <div className="text-slate-100 space-y-4 md:w-2/3 text-3xl">
             <p>
               Spanning across 3 days, this conference, open to both local and
-              international delegates, offer meticulously curated sessions for
+              international delegates, offers meticulously curated sessions for
               equipping, empowering and for transforming encounters with God.
             </p>
             <p>
