@@ -296,6 +296,15 @@ const ContactSection = ({
                 don't receive a confirmation.
               </div>
             )}
+
+            {/* Hidden reCAPTCHA v3 component */}
+            <div className="hidden">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                size="invisible"
+                sitekey="6Ldcvx8rAAAAAIK99WT_BgLU8LGXOdrrYQcNr1Ar"
+              />
+            </div>
           </form>
         </div>
       </div>
