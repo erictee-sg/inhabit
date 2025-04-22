@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
@@ -27,9 +26,6 @@ const formSchema = z.object({
   message: z
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
-  recaptcha: z
-    .string()
-    .min(1, { message: "Please complete the captcha verification." }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -58,17 +54,13 @@ const ContactSection = ({
       name: "",
       email: "",
       message: "",
-      recaptcha: "",
     },
   });
-
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [submitTime, setSubmitTime] = useState<number | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [captchaError, setCaptchaError] = useState("");
 
   // Set the initial time when component mounts
   useEffect(() => {
@@ -101,25 +93,22 @@ const ContactSection = ({
       return;
     }
 
-    // Verify reCAPTCHA
-    if (!data.recaptcha) {
-      setCaptchaError("Please complete the captcha verification.");
-      return;
-    }
-
     setIsSubmitting(true);
-    setCaptchaError("");
 
     try {
+      // Ensure data values are properly sanitized
+      const sanitizedName = data.name ? data.name.trim() : "";
+      const sanitizedEmail = data.email ? data.email.trim() : "";
+      const sanitizedMessage = data.message ? data.message.trim() : "";
+
       // Insert data into Supabase
       const { data: insertedData, error } = await supabase
         .from("contact_messages")
         .insert([
           {
-            name: data.name,
-            email: data.email,
-            message: data.message,
-            recaptcha_token: data.recaptcha,
+            name: sanitizedName,
+            email: sanitizedEmail,
+            message: sanitizedMessage,
           },
         ]);
 
@@ -167,9 +156,6 @@ const ContactSection = ({
       setIsSubmitting(false);
       setShowSuccess(true);
       form.reset();
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-      }
       setTimeout(() => {
         setShowSuccess(false);
       }, 5000);
@@ -289,33 +275,6 @@ const ContactSection = ({
               />
             </div>
 
-            <div className="mb-6">
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey="6LcnQpApAAAAAGkXbPJO3mLKywMbOCCTSNV9jPVK"
-                onChange={(value) => {
-                  try {
-                    // Safely handle the value - ensure it's a string or empty string
-                    const safeValue =
-                      typeof value === "string" ? value : value || "";
-                    form.setValue("recaptcha", safeValue);
-                    setCaptchaError("");
-                  } catch (error) {
-                    console.error("Error handling reCAPTCHA value:", error);
-                    form.setValue("recaptcha", "");
-                  }
-                }}
-              />
-              {captchaError && (
-                <p className="text-sm text-red-400 mt-2">{captchaError}</p>
-              )}
-              {form.formState.errors.recaptcha && (
-                <p className="text-sm text-red-400 mt-2">
-                  {form.formState.errors.recaptcha.message}
-                </p>
-              )}
-            </div>
-
             <Button
               type="submit"
               className="px-8 bg-brand-primary hover:bg-brand-primary/90 text-white mx-auto block"
@@ -343,18 +302,5 @@ const ContactSection = ({
     </section>
   );
 };
-
-// Add reCAPTCHA v3 type definition to window object
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (
-        siteKey: string,
-        options: { action: string },
-      ) => Promise<string>;
-    };
-  }
-}
 
 export default ContactSection;
