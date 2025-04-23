@@ -155,9 +155,12 @@ const HeroSection = ({
       setScrollProgress(progress);
 
       // Determine which section is currently active based on scroll position with smoother thresholds
+      // Use a responsive threshold that's smaller on mobile devices
+      const mobileAdjustment = window.innerWidth < 768 ? 0.3 : 0; // Reduce threshold on mobile
+
       if (window.scrollY < vh * 0.5) {
         setActiveSection(1);
-      } else if (window.scrollY < vh * 1.5) {
+      } else if (window.scrollY < vh * (1.5 - mobileAdjustment)) {
         setActiveSection(2);
 
         // Trigger line-by-line animation for second section
@@ -168,7 +171,8 @@ const HeroSection = ({
         setActiveSection(3);
 
         // Trigger line-by-line animation for third section
-        const thirdSectionProgress = (window.scrollY - vh * 1.5) / (vh * 1.0);
+        const thirdSectionProgress =
+          (window.scrollY - vh * (1.5 - mobileAdjustment)) / (vh * 1.0);
         const newThirdSectionLines = [thirdSectionProgress > 0.1];
         setThirdSectionLines(newThirdSectionLines);
       }

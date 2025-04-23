@@ -292,7 +292,7 @@ const ContactSection = ({
               />
             </div>
 
-            <div className="flex flex-row justify-between items-center space-x-4">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
               <ReCAPTCHA
                 sitekey="6LdWYyErAAAAANI5P0PHp434yaQXpWE4l7VPz2HS"
                 onChange={handleRecaptchaChange}
