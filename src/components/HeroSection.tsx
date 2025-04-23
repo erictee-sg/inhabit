@@ -176,7 +176,7 @@ const HeroSection = ({
       // Keep parallax fixed until the bottom of the third content block is reached
       // This happens at approximately 2.5x viewport height
       // When we pass this threshold, the background will start scrolling with the content
-      setParallaxFixed(window.scrollY < vh * 2.5);
+      setParallaxFixed(window.scrollY < vh * 2.2);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -427,7 +427,7 @@ const HeroSection = ({
 
         {/* Third content section - appears on second scroll */}
         <div
-          className={`h-screen w-full flex flex-col items-center justify-center px-4 md:px-8 max-w-7xl mx-auto transition-all duration-700 ${activeSection === 3 ? "opacity-100" : "opacity-0"}`}
+          className={`h-screen w-full flex flex-col items-center justify-start px-4 md:px-8 max-w-7xl mx-auto transition-all duration-700 ${activeSection === 3 ? "opacity-100" : "opacity-0"} mb-[90vh]`}
           style={{
             transform: `translateY(${activeSection === 3 ? 0 : 20}px)`,
             pointerEvents: activeSection === 3 ? "auto" : "none",

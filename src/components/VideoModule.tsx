@@ -25,7 +25,7 @@ const VideoModule = ({
   const embedId = getYouTubeId(videoId);
 
   return (
-    <div className="w-full py-16 px-4 md:px-8 bg-gradient-to-b from-[#000] to-[#889a98]">
+    <div className="w-full py-16 px-4 md:px-8 bg-gradient-to-b from-[#000] to-[#889a98] relative z-30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-white tracking-tight leading-tight mb-4">
