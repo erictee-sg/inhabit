@@ -8,6 +8,7 @@ import ConferenceDetailsSection from "./ConferenceDetailsSection";
 import CTASection from "./CTASection";
 import VisitingBrisbane from "./VisitingBrisbane";
 import FAQSection from "./FAQSection";
+import ContactSection from "./ContactSection";
 import Footer from "./Footer";
 
 const Home = () => {
@@ -34,8 +35,10 @@ const Home = () => {
       <VisitingBrisbane />
       {/* FAQ Section */}
       <FAQSection />
-      {/* Footer with Contact Section */}
-      <Footer email="ericzigbiz@gmail.com" />
+      {/* Contact Section */}
+      <ContactSection />
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

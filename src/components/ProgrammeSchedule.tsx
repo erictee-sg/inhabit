@@ -28,8 +28,8 @@ const ProgrammeSchedule = () => {
       date: "August 23, 2025",
       schedule: [
         { time: "9:00 AM", activity: "Session 4" },
-        { time: "12:00 PM", activity: "Session 5" },
-        { time: "1:00 PM", activity: "Session 6" },
+        { time: "12:00 PM", activity: "Break" },
+        { time: "1:00 PM", activity: "Session 5" },
         { time: "5:00 PM", activity: "Program End" },
       ],
     },

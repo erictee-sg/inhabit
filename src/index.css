@@ -89,6 +89,7 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
+    scroll-behavior: smooth;
   }
   h1 {
     @apply font-heading-bold;
@@ -97,5 +98,10 @@
   h3,
   h4 {
     @apply font-heading;
+  }
+
+  /* Add scroll margin to section targets for better positioning with fixed header */
+  section[id] {
+    scroll-margin-top: 80px;
   }
 }

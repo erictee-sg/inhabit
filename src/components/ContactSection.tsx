@@ -2,18 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import { Label } from "../components/ui/label";
-import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface ContactSectionProps {
   email?: string;
@@ -48,6 +42,7 @@ const ContactSection = ({
       setSupabaseConfigured(false);
     }
   }, []);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,6 +56,8 @@ const ContactSection = ({
   const [honeypot, setHoneypot] = useState("");
   const [submitTime, setSubmitTime] = useState<number | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [recaptchaError, setRecaptchaError] = useState(false);
 
   // Set the initial time when component mounts
   useEffect(() => {
@@ -75,6 +72,13 @@ const ContactSection = ({
       );
       return;
     }
+
+    // Check if reCAPTCHA is completed
+    if (!recaptchaToken) {
+      setRecaptchaError(true);
+      return;
+    }
+
     // Spam prevention checks
     const currentTime = Date.now();
     const timeElapsed = submitTime ? currentTime - submitTime : 0;
@@ -97,9 +101,12 @@ const ContactSection = ({
 
     try {
       // Ensure data values are properly sanitized
-      const sanitizedName = data.name ? data.name.trim() : "";
-      const sanitizedEmail = data.email ? data.email.trim() : "";
-      const sanitizedMessage = data.message ? data.message.trim() : "";
+      const sanitizedName =
+        typeof data.name === "string" ? data.name.trim() : "";
+      const sanitizedEmail =
+        typeof data.email === "string" ? data.email.trim() : "";
+      const sanitizedMessage =
+        typeof data.message === "string" ? data.message.trim() : "";
 
       // Insert data into Supabase
       const { data: insertedData, error } = await supabase
@@ -109,7 +116,7 @@ const ContactSection = ({
             name: sanitizedName,
             email: sanitizedEmail,
             message: sanitizedMessage,
-            // Add a timestamp to help prevent duplicate submissions
+            recaptcha_token: recaptchaToken,
             created_at: new Date().toISOString(),
           },
         ]);
@@ -158,6 +165,7 @@ const ContactSection = ({
       setIsSubmitting(false);
       setShowSuccess(true);
       form.reset();
+      setRecaptchaToken(null);
       setTimeout(() => {
         setShowSuccess(false);
       }, 5000);
@@ -198,9 +206,16 @@ const ContactSection = ({
     }
   };
 
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+    if (token) {
+      setRecaptchaError(false);
+    }
+  };
+
   return (
-    <section className="w-full py-8" id="contact-us">
-      <div className="max-w-3xl mx-auto">
+    <section className="w-full py-8 bg-black text-white" id="contact-us">
+      <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-heading-bold mb-8 text-left">
             Get in Touch
@@ -277,25 +292,30 @@ const ContactSection = ({
               />
             </div>
 
-            <Button
-              type="submit"
-              className="px-8 bg-brand-primary hover:bg-brand-primary/90 text-white mx-auto block"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Sending..." : "Send Message"}
-            </Button>
+            <div className="flex flex-row justify-between items-center space-x-4">
+              <ReCAPTCHA
+                sitekey="6LdWYyErAAAAANI5P0PHp434yaQXpWE4l7VPz2HS"
+                onChange={handleRecaptchaChange}
+                theme="dark"
+              />
+              {recaptchaError && (
+                <p className="text-sm text-red-400">
+                  Please complete the reCAPTCHA verification.
+                </p>
+              )}
+
+              <Button
+                type="submit"
+                className="px-8 bg-brand-primary hover:bg-brand-primary/90 text-white mx-auto block rounded-md"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </div>
 
             {showSuccess && (
               <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md">
                 Thank you for your message! We'll get back to you soon.
-              </div>
-            )}
-
-            {!supabaseConfigured && (
-              <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-md">
-                Note: Our contact form is currently experiencing technical
-                difficulties. Please email us directly at {formRecipient} if you
-                don't receive a confirmation.
               </div>
             )}
           </form>

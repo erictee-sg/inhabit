@@ -70,6 +70,24 @@ const HeroSection = ({
       anchor.addEventListener("click", handleAnchorClick);
     });
 
+    // Handle direct navigation to hash URLs when page loads
+    if (window.location.hash) {
+      setTimeout(() => {
+        const targetId = window.location.hash;
+        const targetElement = document.getElementById(targetId.substring(1));
+
+        if (targetElement) {
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - 70;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 500); // Small delay to ensure page is fully loaded
+    }
+
     // Clean up event listeners on unmount
     return () => {
       anchors.forEach((anchor) => {
