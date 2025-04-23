@@ -102,11 +102,17 @@ const ContactSection = ({
     try {
       // Ensure data values are properly sanitized
       const sanitizedName =
-        typeof data.name === "string" ? data.name.trim() : "";
+        data && data.name && typeof data.name === "string"
+          ? data.name.trim()
+          : "";
       const sanitizedEmail =
-        typeof data.email === "string" ? data.email.trim() : "";
+        data && data.email && typeof data.email === "string"
+          ? data.email.trim()
+          : "";
       const sanitizedMessage =
-        typeof data.message === "string" ? data.message.trim() : "";
+        data && data.message && typeof data.message === "string"
+          ? data.message.trim()
+          : "";
 
       // Insert data into Supabase
       const { data: insertedData, error } = await supabase
