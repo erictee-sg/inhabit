@@ -21,6 +21,8 @@ Deno.serve(async (req) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers":
           "authorization, x-client-info, apikey, content-type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Max-Age": "86400",
       },
       status: 200,
     });
@@ -77,6 +79,9 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ success: true }), {
       headers: {
         "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers":
+          "authorization, x-client-info, apikey, content-type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Content-Type": "application/json",
       },
       status: 200,
@@ -92,6 +97,9 @@ Deno.serve(async (req) => {
       {
         headers: {
           "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers":
+            "authorization, x-client-info, apikey, content-type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
           "Content-Type": "application/json",
         },
         status: 500,
