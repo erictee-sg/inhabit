@@ -132,16 +132,25 @@ const ContactSection = ({
 
       // Also send to Google Sheets via Edge Function
       try {
-        const { data: sheetData, error: sheetError } =
-          await supabase.functions.invoke(
-            "supabase-functions-insert_contact_to_sheets",
-            {
-              body: { record: contactData },
+        // Use fetch directly instead of supabase.functions.invoke to avoid CORS issues
+        const response = await fetch(
+          "https://xhexvhqguiqvgvuthbp.supabase.co/functions/v1/insert_contact_to_sheets",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${supabase.auth.session()?.access_token || ""}`,
+              apikey: import.meta.env.VITE_SUPABASE_ANON_KEY || "",
             },
-          );
+            body: JSON.stringify({ record: contactData }),
+          },
+        );
 
-        if (sheetError) {
-          console.error("Error sending to Google Sheets:", sheetError);
+        if (!response.ok) {
+          console.error(
+            "Error sending to Google Sheets:",
+            await response.text(),
+          );
         }
       } catch (sheetException) {
         console.error("Exception sending to Google Sheets:", sheetException);
