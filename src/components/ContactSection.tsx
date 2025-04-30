@@ -115,17 +115,35 @@ const ContactSection = ({
           : "";
 
       // Insert data into Supabase
+      const contactData = {
+        name: sanitizedName,
+        email: sanitizedEmail,
+        message: sanitizedMessage,
+        recaptcha_token: recaptchaToken,
+        created_at: new Date().toISOString(),
+      };
+
       const { data: insertedData, error } = await supabase
         .from("contact_messages")
-        .insert([
-          {
-            name: sanitizedName,
-            email: sanitizedEmail,
-            message: sanitizedMessage,
-            recaptcha_token: recaptchaToken,
-            created_at: new Date().toISOString(),
-          },
-        ]);
+        .insert([contactData]);
+
+      // Also send to Google Sheets via Edge Function
+      try {
+        const { data: sheetData, error: sheetError } =
+          await supabase.functions.invoke(
+            "supabase-functions-insert_contact_to_sheets",
+            {
+              body: { record: contactData },
+            },
+          );
+
+        if (sheetError) {
+          console.error("Error sending to Google Sheets:", sheetError);
+        }
+      } catch (sheetException) {
+        console.error("Exception sending to Google Sheets:", sheetException);
+        // Continue with the form submission flow even if Google Sheets fails
+      }
 
       if (error) {
         console.error("Supabase insertion error:", error);
