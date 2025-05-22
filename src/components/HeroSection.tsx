@@ -407,6 +407,41 @@ const HeroSection = ({
           <p className="text-xl md:text-2xl text-white/90 mb-4 whitespace-pre-line text-center">
             {tagline}
           </p>
+
+          {/* Pre-Conference Connect Info */}
+          <div className="mt-6 border border-white rounded-lg p-4 max-w-md text-center">
+            <p className="text-white font-semibold text-lg">
+              Pre-Conference Connect!
+            </p>
+            <p className="text-white/90 text-sm md:text-base mt-1">
+              Join us for candid conversations with Neli on Zoom
+            </p>
+            <p className="text-white/90 text-sm md:text-base">
+              30 & 31 May.
+              <a
+                href="#connect-details"
+                className="text-white underline hover:text-white/80 ml-1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const connectDetailsSection =
+                    document.getElementById("connect-details");
+                  if (connectDetailsSection) {
+                    const elementPosition =
+                      connectDetailsSection.getBoundingClientRect().top;
+                    const offsetPosition =
+                      elementPosition + window.scrollY - 70;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+              >
+                Details
+              </a>{" "}
+              &gt;&gt;
+            </p>
+          </div>
         </div>
 
         {/* Second content section - appears on first scroll */}
