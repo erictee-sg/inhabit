@@ -210,12 +210,13 @@ const HeroSection = ({
       {/* Background Images Carousel with parallax effect */}
       <div
         className={`${parallaxFixed ? "fixed" : "absolute"} inset-0 w-full h-screen transition-all duration-500 ease-out z-10`}
+        // Parallax effect - only starts after the bottom of the third content block reaches top of viewport
         style={{
           transform: parallaxFixed
             ? "none"
             : `translateY(${(scrollY - window.innerHeight * 2.5) * 0.8}px)`,
           top: parallaxFixed ? 0 : `${window.innerHeight * 2.5}px`,
-        }} // Parallax effect - only starts after the bottom of the third content block reaches top of viewport
+        }}
       >
         {/* Background image carousel */}
         {backgroundImages.map((image, index) => (
@@ -246,7 +247,6 @@ const HeroSection = ({
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-brand-black/70 via-brand-black/50 to-brand-black/90"></div>
       </div>
-
       {/* Sticky Navigation Bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-brand-black/80 backdrop-blur-md transition-all duration-300 shadow-md">
         <div className="max-w-7xl mx-auto p-4 md:p-6 flex justify-between items-center">
@@ -383,7 +383,6 @@ const HeroSection = ({
           </div>
         )}
       </div>
-
       {/* Content Container */}
       <div className="relative z-20 w-full h-[270vh] pointer-events-none">
         {/* Content sections - each taking full viewport height */}
@@ -402,46 +401,11 @@ const HeroSection = ({
             alt="Inhabit Conference Logo"
             className="w-80 md:w-96 mb-8 animate-fade-in-down"
           />
-
           {/* Date and Location */}
           <p className="text-xl md:text-2xl text-white/90 mb-4 whitespace-pre-line text-center">
             {tagline}
           </p>
-
           {/* Pre-Conference Connect Info */}
-          <div className="mt-6 border border-white rounded-lg p-4 max-w-md text-center">
-            <p className="text-white font-semibold text-lg">
-              Pre-Conference Connect!
-            </p>
-            <p className="text-white/90 text-sm md:text-base mt-1">
-              Join us for candid conversations with Neli on Zoom
-            </p>
-            <p className="text-white/90 text-sm md:text-base">
-              30 & 31 May.
-              <a
-                href="#connect-details"
-                className="text-white underline hover:text-white/80 ml-1"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const connectDetailsSection =
-                    document.getElementById("connect-details");
-                  if (connectDetailsSection) {
-                    const elementPosition =
-                      connectDetailsSection.getBoundingClientRect().top;
-                    const offsetPosition =
-                      elementPosition + window.scrollY - 70;
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: "smooth",
-                    });
-                  }
-                }}
-              >
-                Details
-              </a>{" "}
-              &gt;&gt;
-            </p>
-          </div>
         </div>
 
         {/* Second content section - appears on first scroll */}
