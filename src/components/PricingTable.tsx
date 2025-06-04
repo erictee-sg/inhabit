@@ -14,7 +14,7 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     registration: "Early bird",
-    date: "7 April - 6 June",
+    date: "7 April - 15 June",
     bookingTypes: [
       {
         type: "Individual booking",
@@ -26,7 +26,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     registration: "Standard",
-    date: "7 June - 31 July",
+    date: "16 June - 31 July",
     bookingTypes: [
       {
         type: "Individual booking",
