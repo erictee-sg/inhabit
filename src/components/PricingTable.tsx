@@ -12,6 +12,7 @@ interface PricingTier {
 }
 
 const pricingTiers: PricingTier[] = [
+  /*
   {
     registration: "Early bird",
     date: "7 April - 15 June",
@@ -24,6 +25,7 @@ const pricingTiers: PricingTier[] = [
     buttonUrl:
       "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
   },
+  */
   {
     registration: "Standard",
     date: "16 June - 31 July",
