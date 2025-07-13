@@ -6,19 +6,15 @@ const ProgrammeSchedule = () => {
       day: "Thursday",
       date: "August 21, 2025",
       schedule: [
-        { time: "5:00 PM", activity: "Registration / Welcome" },
-        { time: "6:00 PM", activity: "Session 1" },
-        { time: "7:00 PM", activity: "Worship & Ministry Time" },
-        { time: "9:00 PM", activity: "Session Ends" },
+        { time: "5:00 PM", activity: "Registration / Day 1 Start" },
+        { time: "6:00 PM", activity: "End" },
       ],
     },
     {
       day: "Friday",
       date: "August 22, 2025",
       schedule: [
-        { time: "9:00 AM", activity: "Session 2" },
-        { time: "12:00 PM", activity: "Break" },
-        { time: "1:00 PM", activity: "Session 3" },
+        { time: "9:00 AM", activity: "Day 2 Start" },
         { time: "5:00 PM", activity: "Break" },
         { time: "7:00 PM", activity: "inHabit Worship Night\n(open to all)" },
       ],
@@ -27,10 +23,8 @@ const ProgrammeSchedule = () => {
       day: "Saturday",
       date: "August 23, 2025",
       schedule: [
-        { time: "9:00 AM", activity: "Session 4" },
-        { time: "12:00 PM", activity: "Break" },
-        { time: "1:00 PM", activity: "Session 5" },
-        { time: "5:00 PM", activity: "Program End" },
+        { time: "9:00 AM", activity: "Day 3 Start" },
+        { time: "5:00 PM", activity: "End" },
       ],
     },
   ];
