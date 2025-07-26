@@ -303,6 +303,12 @@ const HeroSection = ({
                 Registration Details
               </a>
               <a
+                href="#worship-night"
+                className="hover:text-white transition-colors duration-200"
+              >
+                Worship Night
+              </a>
+              <a
                 href="#visiting-brisbane"
                 className="hover:text-white transition-colors duration-200"
                 onClick={scrollToVisitingBrisbane}
@@ -314,12 +320,6 @@ const HeroSection = ({
                 className="hover:text-white transition-colors duration-200"
               >
                 FAQs
-              </a>
-              <a
-                href="#contact-us"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Contact Us
               </a>
               <Button
                 onClick={() =>
@@ -355,10 +355,10 @@ const HeroSection = ({
                 Registration Details
               </a>
               <a
-                href="#programme-schedule"
+                href="#worship-night"
                 className="hover:text-white transition-colors duration-200 py-2"
               >
-                Programme Schedule
+                Worship Night
               </a>
               <a
                 href="#visiting-brisbane"
@@ -372,12 +372,6 @@ const HeroSection = ({
                 className="hover:text-white transition-colors duration-200 py-2"
               >
                 FAQs
-              </a>
-              <a
-                href="#contact-us"
-                className="hover:text-white transition-colors duration-200 py-2"
-              >
-                Contact Us
               </a>
             </nav>
           </div>
@@ -421,8 +415,9 @@ const HeroSection = ({
             <div
               className={`transition-all duration-1000 transform ${secondSectionLines[0] ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} pb-8`}
             >
-              If you belong to a worship, prayer or creative ministry or you
-              simply want to go deeper in worship, inHabit is for you!
+              Join worship leaders, creatives, and church teams for three
+              powerful days of equipping, empowering, and for transforming
+              encounters with God.
             </div>
           </div>
         </div>

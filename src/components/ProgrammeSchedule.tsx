@@ -5,26 +5,27 @@ const ProgrammeSchedule = () => {
     {
       day: "Thursday",
       date: "August 21, 2025",
-      schedule: [
-        { time: "5:00 PM", activity: "Registration / Day 1 Start" },
-        { time: "6:00 PM", activity: "End" },
-      ],
+      schedule: [{ time: "5:00 PM", activity: "Doors open" }],
     },
     {
       day: "Friday",
       date: "August 22, 2025",
       schedule: [
-        { time: "9:00 AM", activity: "Day 2 Start" },
-        { time: "5:00 PM", activity: "Break" },
-        { time: "7:00 PM", activity: "inHabit Worship Night\n(open to all)" },
+        { time: "8:30 AM", activity: "Doors open for coffee and fellowship" },
+        { time: "9:00 AM", activity: "Session starts" },
+        {
+          time: "7:00 PM",
+          activity:
+            "inHabit Worship Night\n(Open to all. Registration required.)",
+        },
       ],
     },
     {
       day: "Saturday",
       date: "August 23, 2025",
       schedule: [
-        { time: "9:00 AM", activity: "Day 3 Start" },
-        { time: "5:00 PM", activity: "End" },
+        { time: "8:30 AM", activity: "Doors open for coffee and fellowship" },
+        { time: "9:00 AM", activity: "Session starts" },
       ],
     },
   ];

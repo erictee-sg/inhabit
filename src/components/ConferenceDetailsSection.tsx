@@ -3,7 +3,8 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 import HotelModal from "./HotelModal";
 import PricingTable from "./PricingTable";
-
+import ProgrammeSchedule from "./ProgrammeSchedule";
+import WorshipNightSection from "./WorshipNightSection";
 import { hotels, Hotel } from "@/data/hotels";
 
 const ConferenceDetailsSection = () => {
@@ -36,6 +37,16 @@ const ConferenceDetailsSection = () => {
         {/* Pricing Table - Full Width */}
         <div className="mb-0">
           <PricingTable />
+        </div>
+
+        {/* Programme Schedule Section */}
+        <div className="mt-0">
+          <ProgrammeSchedule />
+        </div>
+
+        {/* Worship Night Section */}
+        <div className="mt-0">
+          <WorshipNightSection />
         </div>
       </div>
       <div
