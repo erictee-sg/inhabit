@@ -415,9 +415,8 @@ const HeroSection = ({
             <div
               className={`transition-all duration-1000 transform ${secondSectionLines[0] ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} pb-8`}
             >
-              Join worship leaders, creatives, and church teams for three
-              powerful days of equipping, empowering, and for transforming
-              encounters with God.
+              If you belong to a worship, prayer or creative ministry or you
+              simply want to go deeper in worship, inHabit is for you!
             </div>
           </div>
         </div>
