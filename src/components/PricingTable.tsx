@@ -28,7 +28,7 @@ const pricingTiers: PricingTier[] = [
   */
   {
     registration: "Standard",
-    date: "16 June - 31 July",
+    date: "16 June - 20 August",
     bookingTypes: [
       {
         type: "Individual booking",
