@@ -38,6 +38,10 @@ const pricingTiers: PricingTier[] = [
         type: "Group booking (minimum 5)",
         price: "$100.00",
       },
+      {
+        type: "Day Pass (22 or 23 August)",
+        price: "$70.00",
+      },
     ],
     buttonUrl:
       "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",

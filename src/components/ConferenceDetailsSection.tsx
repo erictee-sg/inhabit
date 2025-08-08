@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import HotelModal from "./HotelModal";
 import PricingTable from "./PricingTable";
 import ProgrammeSchedule from "./ProgrammeSchedule";
+import GuestSpeakersSection from "./GuestSpeakersSection";
 import WorshipNightSection from "./WorshipNightSection";
 import { hotels, Hotel } from "@/data/hotels";
 
@@ -42,6 +43,11 @@ const ConferenceDetailsSection = () => {
         {/* Programme Schedule Section */}
         <div className="mt-0">
           <ProgrammeSchedule />
+        </div>
+
+        {/* Guest Speakers Section */}
+        <div className="mt-0">
+          <GuestSpeakersSection />
         </div>
 
         {/* Worship Night Section */}

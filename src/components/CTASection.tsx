@@ -47,6 +47,27 @@ const CTASection = () => {
             <ExternalLink className="inline mr-1 h-4 w-4 text-white/60" />
             trybooking.com
           </p>
+
+          {/* Prayer and Fasting Note */}
+          <div className="mt-6 max-w-2xl mx-auto">
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 text-white/90">
+              <p className="text-sm leading-relaxed">
+                &quot;Hey, good family. As we come closer to the inHabit Worship
+                Conference, we invite you to join with us for four days of
+                preparation through prayer and fasting. We've created devotional
+                material to{" "}
+                <a
+                  href="https://drive.google.com/drive/folders/1nY3fK-1yNO_pQq4NDg46pBXjjCijyL0q?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand-primary hover:text-brand-primary/80 underline transition-colors duration-200"
+                >
+                  help you
+                </a>
+                . Day 1 begins this Sunday, 10 August.&quot; - Ps. Neli Atiga.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div
