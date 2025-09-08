@@ -19,7 +19,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({
   title = "inHabit",
-  tagline = "21-23 August, 2025\nBrisbane, Australia",
+  tagline = "See you in 2027",
   conferenceTagline = "It's more than a conference, it's a movement",
   ctaText = "Book Tickets",
   ctaUrl = "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
@@ -205,6 +205,10 @@ const HeroSection = ({
     }
   };
 
+  const scrollToRegistration = () => {
+    // Removed scrolling behavior - no-op function
+  };
+
   return (
     <section className="relative w-full h-[270vh] overflow-hidden bg-brand-black">
       {/* Background Images Carousel with parallax effect */}
@@ -262,21 +266,6 @@ const HeroSection = ({
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Mobile Book Now button */}
-            <Button
-              onClick={() =>
-                window.open(
-                  "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
-                  "_blank",
-                )
-              }
-              size="sm"
-              className="md:hidden bg-brand-primary hover:bg-brand-primary/90 text-white px-3 py-1 rounded-full transition-all duration-300 transform hover:scale-105 font-bold text-sm"
-            >
-              Book Now
-              <ExternalLink className="ml-1 h-3 w-3" />
-            </Button>
-
             {/* Mobile hamburger menu button */}
             <Button
               variant="ghost"
@@ -297,18 +286,6 @@ const HeroSection = ({
                 About
               </a>
               <a
-                href="#event-details"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Registration Details
-              </a>
-              <a
-                href="#worship-night"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Worship Night
-              </a>
-              <a
                 href="#visiting-brisbane"
                 className="hover:text-white transition-colors duration-200"
                 onClick={scrollToVisitingBrisbane}
@@ -321,19 +298,6 @@ const HeroSection = ({
               >
                 FAQs
               </a>
-              <Button
-                onClick={() =>
-                  window.open(
-                    "https://www.trybooking.com/events/1386301/sessions/5546830/sections/2643979/tickets",
-                    "_blank",
-                  )
-                }
-                size="default"
-                className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-bold text-base"
-              >
-                Book Now
-                <ExternalLink className="ml-2 h-5 w-5" />
-              </Button>
             </nav>
           </div>
         </div>
@@ -347,18 +311,6 @@ const HeroSection = ({
                 className="hover:text-white transition-colors duration-200 py-2"
               >
                 About
-              </a>
-              <a
-                href="#event-details"
-                className="hover:text-white transition-colors duration-200 py-2"
-              >
-                Registration Details
-              </a>
-              <a
-                href="#worship-night"
-                className="hover:text-white transition-colors duration-200 py-2"
-              >
-                Worship Night
               </a>
               <a
                 href="#visiting-brisbane"

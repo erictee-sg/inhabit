@@ -8,7 +8,7 @@ interface VideoModuleProps {
 }
 
 const VideoModule = ({
-  videoId = "xIOcLvHWnCE",
+  videoId = "Ix-B7VIt_Rk",
   title = "Experience Inhabit Conference. Watch this video from Ps Neli Atiga:",
 }: VideoModuleProps) => {
   // Extract video ID from YouTube URL if full URL is provided
@@ -29,7 +29,7 @@ const VideoModule = ({
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-white tracking-tight leading-tight mb-4">
-            <div className="text-4xl font-bold">Your Invitation</div>
+            <div className="text-4xl font-bold">Highlights</div>
           </h2>
         </div>
 

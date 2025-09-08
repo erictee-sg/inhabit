@@ -29,11 +29,6 @@ const CTASection = () => {
         }}
       />
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Countdown Timer */}
-        <div className="mb-8 text-white">
-          <CountdownTimer targetDate={eventDate} />
-        </div>
-
         {/* Book Tickets CTA */}
         <div className="text-center">
           <Button

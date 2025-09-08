@@ -101,21 +101,27 @@ const ContactSection = ({
 
     try {
       // Ensure data values are properly sanitized
-      const sanitizedName = data?.name
-        ? typeof data.name === "string"
+      const sanitizedName =
+        data?.name &&
+        typeof data.name === "string" &&
+        data.name !== null &&
+        data.name !== undefined
           ? data.name.trim()
-          : ""
-        : "";
-      const sanitizedEmail = data?.email
-        ? typeof data.email === "string"
+          : "";
+      const sanitizedEmail =
+        data?.email &&
+        typeof data.email === "string" &&
+        data.email !== null &&
+        data.email !== undefined
           ? data.email.trim()
-          : ""
-        : "";
-      const sanitizedMessage = data?.message
-        ? typeof data.message === "string"
+          : "";
+      const sanitizedMessage =
+        data?.message &&
+        typeof data.message === "string" &&
+        data.message !== null &&
+        data.message !== undefined
           ? data.message.trim()
-          : ""
-        : "";
+          : "";
 
       // Insert data into Supabase
       const contactData = {

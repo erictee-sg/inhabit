@@ -1,20 +1,15 @@
 import React from "react";
 import HeroSection from "./HeroSection";
 import VideoModule from "./VideoModule";
-import ScheduleSection from "./ScheduleSection";
 import MoreInfoSection from "./MoreInfoSection";
 import PsNeliSection from "./PsNeliSection";
-import ConferenceDetailsSection from "./ConferenceDetailsSection";
-import CTASection from "./CTASection";
 import VisitingBrisbane from "./VisitingBrisbane";
-import FAQSection from "./FAQSection";
-import ContactSection from "./ContactSection";
+
 import Footer from "./Footer";
 
 const Home = () => {
   const scrollToRegistration = () => {
     // Removed scrolling behavior
-    return false;
   };
 
   return (
@@ -27,16 +22,9 @@ const Home = () => {
       <MoreInfoSection />
       {/* About Ps. Neli Section */}
       <PsNeliSection />
-      {/* Conference Details Section */}
-      <ConferenceDetailsSection />
-      {/* CTA Section */}
-      <CTASection />
       {/* Visiting Brisbane Section */}
       <VisitingBrisbane />
-      {/* FAQ Section */}
-      <FAQSection />
-      {/* Contact Section */}
-      <ContactSection />
+
       {/* Footer */}
       <Footer />
     </div>
